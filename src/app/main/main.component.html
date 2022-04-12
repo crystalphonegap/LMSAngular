@@ -1,0 +1,50 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav " fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'">
+    <mat-toolbar class="bring-to-front">HRJ - LMS</mat-toolbar>
+    
+    
+    <mat-nav-list>
+      <mat-divider></mat-divider>
+      <a mat-list-item routerLink='{{menu.routerLink}}' routerLinkActive="active-list-item" (click)="sideNavClose()" *ngFor="let menu of appUserMenus">
+        <h2 matLine>{{menu.menuName}}</h2>
+        <mat-icon matListIcon>{{menu.menuIcon}}</mat-icon>
+        <mat-divider></mat-divider>
+      </a>
+      <a mat-list-item (click)="logout()" (click)="sideNavClose()" >
+        <h2 matLine>Logout</h2>
+        <mat-icon matListIcon>lock_open</mat-icon>
+        <mat-divider></mat-divider>
+      </a>
+    </mat-nav-list>
+    <mat-toolbar class="align-avatar-center"  mat-list-item>
+      <ngx-avatar size="100" name="{{ userInfo?.fullName }}"></ngx-avatar>
+      <br/>
+      <!-- <mat-divider></mat-divider> -->
+    </mat-toolbar>
+    
+    <mat-nav-list>
+      <mat-divider></mat-divider>
+      <a mat-list-item >
+        <h2 matLine>{{userInfo?.fullName}}</h2>
+       <!--  <mat-icon matListIcon>user</mat-icon> -->
+        <mat-divider></mat-divider>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button 
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()" *ngIf="isShowMenuButton">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Lead Management System</span>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+  
+</mat-sidenav-container>

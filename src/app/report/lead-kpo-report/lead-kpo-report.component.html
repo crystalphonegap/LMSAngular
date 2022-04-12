@@ -1,0 +1,58 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="kpoLeadDownloadFilterForm">
+      <div class="row">
+        <mat-form-field class="col-sm-4 col-md-4 col-lg-4" appearance="">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [formGroup]="kpoLeadDownloadFilterForm" [rangePicker]="picker">
+            <input matStartDate formControlName="leadFromDate" placeholder="From date">
+            <input matEndDate formControlName="leadUptoDate" placeholder="Upto date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <button mat-mini-fab color="primary" class="mx-3" (click)="showReport()">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <button mat-mini-fab type="button" color="primary" (click)="downloadReport()">
+            <mat-icon>file_download</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+    <div class=""></div>
+    <table class="table table-striped table-hover">
+      <thead >
+        <tr>
+          <th scope="col" width="12%">KPO Agent</th>
+          <th scope="col" class="text-right" width="8%">Lead Assigned</th>
+          <th scope="col" class="text-right" width="8%">Calls Done</th>
+          <th scope="col" class="text-right" width="8%">Calls Pending</th>
+          <th scope="col" class="text-right" width="8%">Lost To Competition</th>
+          <th scope="col" class="text-right" width="8%">Not Qualified</th>
+          <th scope="col" class="text-right" width="8%">Not Reachable</th>
+          <th scope="col" class="text-right" width="8%">Qualified</th>
+          <th scope="col" class="text-right" width="8%">Hot</th>
+          <th scope="col" class="text-right" width="8%">Warm</th>
+          <th scope="col" class="text-right" width="8%">Cold</th>
+        </tr>
+      </thead>
+      <tbody class="list-group-scroll">
+        <tr *ngFor="let kpoagentLead of kpoAgentLeadData; let last = last" [ngClass]="{'last-child': last}">
+          <td width="12%">{{kpoagentLead.kpoAgentName}}</td>
+          <td class="text-right" width="8%">{{kpoagentLead.leadAssigned}}</td>
+          <td class="text-right" width="8%">{{kpoagentLead.attendedCalls}}</td>
+          <td class="text-right" width="8%">{{kpoagentLead.pendingCalls}}</td>
+          <td class="text-right" width="8%">{{kpoagentLead.lostToCompetitions}}</td>
+          <td class="text-right" width="8%">{{kpoagentLead.notQualifieds}}</td>
+          <td class="text-right" width="8%">{{kpoagentLead.notReachables}}</td>
+          <td class="text-right" width="8%">{{kpoagentLead.qualifieds}}</td>
+          <td class="text-right" width="8%">{{kpoagentLead.hot}}</td>
+          <td class="text-right" width="8%">{{kpoagentLead.warm}}</td>
+          <td class="text-right" width="8%">{{kpoagentLead.cold}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-card-content>
+</mat-card>

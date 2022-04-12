@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="row  justify-content-md-center">
+    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+      <h3>Sign-in yourself to LMS - H & R Johnson (India)</h3>
+    </div>
+    <div class="col-sm-4 margin-top-20px">
+      <mat-card class="mat-elevation-z7">
+        <form [formGroup]="loginForm" (submit)="onLoginSubmit()" autocomplete="off">
+          <div class="row">
+            <mat-form-field class="col-sm-12 col-md-12 col-lg-12 mt-1">
+              <input matInput formControlName="userName" [ngClass]="{'is-invalid': loginForm.get('userName').errors}"
+                type="text" placeholder="Enter user name">
+              <mat-error *ngIf="loginForm.get('userName').hasError('required')">
+                Please enter user name
+              </mat-error>
+              <!-- <mat-error  *ngIf="loginForm.get('mobileNo').hasError('pattern')">
+                                          Please enter valid mobile no.
+                                      </mat-error> -->
+            </mat-form-field>
+            <mat-form-field class="col-sm-12 col-md-12 col-lg-12 mt-3">
+              <input matInput formControlName="password" [ngClass]="{'is-invalid': loginForm.get('password').errors}"
+                type="password" placeholder="Enter your password">
+              <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                Please enter your password to sign-in
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row justify-content-md-center mt-3">
+            <button mat-raised-button color="primary" type="submit" class="button-margin-width">Sign In</button>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row  justify-content-md-center">
+    <div class="col-sm-12 mt-5" *ngIf="loginResult.statusCode > 0">
+      <mat-card class="mat-elevation-z7" [ngClass]="(loginResult.statusCode === 200) ? 'bg-success' : 'bg-danger'">
+          <p class="white-space">{{loginResult.message}}</p>
+      </mat-card>
+  </div>
+  </div>
+</div>

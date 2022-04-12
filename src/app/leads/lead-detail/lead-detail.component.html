@@ -1,0 +1,292 @@
+<mat-tab-group >
+<mat-tab label="Lead">
+
+<form [formGroup]="leadDetailForm" (submit)="saveLeadInfo()">
+<mat-card>
+    <!-- <div class="row">
+        
+    </div> -->
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="row">
+                   <!--  <div class="col-sm-6 col-md-6 col-lg-6"><h2>{{ leadDetail.contactPersonName }}</h2></div>
+ -->
+                    <mat-form-field class="col-sm-10 col-md-10 col-lg-10 mt-2">
+                        <input matInput formControlName="contactPersonName" type="text" placeholder="Lead Name" autocomplete="off">
+                        <mat-error  *ngIf="leadDetailForm.get('contactPersonName').hasError('required')">
+                            Please enter lead name
+                        </mat-error>
+                    </mat-form-field>
+
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                        <!-- <input matInput formControlName="overallLeadStatus" type="text" placeholder="Lead Status"> -->
+                        <button type="button" mat-fab class="default-cursor" [ngClass]="{'closedLead': leadDetail.overallLeadStatus == 'Closed', 
+                            'openLead': leadDetail.overallLeadStatus == 'Open'}">{{ leadDetail.overallLeadStatus }}</button>
+                        
+                    </div>
+
+                    <mat-form-field class="col-sm-8 col-md-8 col-lg-8 mt-2">
+                        <input matInput formControlName="emailAddressPrimary" type="text" placeholder="Email Primary" autocomplete="off">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-sm-4 col-md-4 col-lg-4  mt-2">
+                        <input matInput formControlName="mobileNumberPrimary" type="text" placeholder="Mobile Number Primary" autocomplete="off">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-sm-8 col-md-8 col-lg-8">
+                        <input matInput formControlName="emailAddressSecondary" type="text" placeholder="Email Secondary" autocomplete="off">
+                    </mat-form-field>
+                    
+                    <mat-form-field class="col-sm-4 col-md-4 col-lg-4">
+                        <input matInput formControlName="mobileNumberSecondary" type="text" placeholder="Mobile Number Secondary" autocomplete="off">
+                    </mat-form-field>
+        
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6">
+                        <input matInput formControlName="city" type="text" placeholder="City" autocomplete="off">
+                    </mat-form-field>
+        
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6" >
+                        <mat-select formControlName="state" placeholder="State" (selectionChange)="onStateChange($event)">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let state of leadMasterInfo.states" [(value)]="state.stateName" [disabled]="isReadOnly">{{ state.stateName }}</mat-option>
+                        </mat-select>
+                        <!-- <mat-error  *ngIf="truckForm.get('truckType').hasError('required')">
+                        Please select truck type
+                        </mat-error> -->
+                    </mat-form-field>
+        
+                    <mat-form-field class="col-sm-12 col-md-12 col-lg-12">
+                        <input matInput formControlName="address" type="text" placeholder="Address" autocomplete="off">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-sm-12 col-md-12 col-lg-12">
+                        <input matInput formControlName="company" type="text" placeholder="Company" autocomplete="off">
+                    </mat-form-field>
+        
+                    <mat-form-field class="col-sm-12 col-md-12 col-lg-12">
+                        <input matInput formControlName="subject" type="text" placeholder="Subject" autocomplete="off">
+                    </mat-form-field>
+                    
+                    <mat-form-field class="col-sm-12 col-md-12 col-lg-12">
+                        <!-- <input matInput formControlName="description" type="text" placeholder="Description" > -->
+                        <textarea matInput formControlName="description" type="text" placeholder="Description" [rows]="6"></textarea>
+                        <!-- <textarea matInput>{{leadDetail.description}}</textarea> -->
+                    </mat-form-field>
+                </div>
+            </div>  
+            <mat-tab-group mat-stretch-tabs mat-align-tabs="center" class="col-sm-6 col-md-6 col-lg-6">
+                <mat-tab label="KPO Agent Action">
+                <!-- <div class="row"> -->
+                    
+                    <div class="list-group-scroll-list">
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2">
+                        <mat-select formControlName="leadCallingStatusId" placeholder="Calling Status">
+                        <!-- <mat-option>None</mat-option> -->
+                        <mat-option *ngFor="let s of leadMasterInfo.leadCallingStatuses" [(value)]="s.id" [disabled]="isReadOnly">{{ s.callingStatus }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2">
+                        <mat-select formControlName="leadClassificationId" placeholder="Lead Classification">
+                        <mat-option>None</mat-option>
+                        <mat-option *ngFor="let s of leadMasterInfo.leadClassifications" [(value)]="s.id">{{ s.classification }}</mat-option>
+                        </mat-select>
+                        <mat-error  *ngIf="leadDetailForm.get('leadClassificationId').hasError('required')">
+                            Please select lead classification
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-sm-12 col-md-12 col-lg-12 mt-2 px-2">
+                        <mat-select formControlName="assignedToECId" placeholder="Assign to EC">
+                        <!-- <mat-option>None</mat-option> -->
+                        <mat-option *ngFor="let s of leadMasterInfo.experienceCenters" [(value)]="s.experienceCenterId" [disabled]="isReadOnly">{{ s.experienceCenterName }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2">
+                        <mat-select formControlName="leadEnquiryTypeId" placeholder="Enquiry Type">
+                        <mat-option>None</mat-option>
+                        <mat-option *ngFor="let s of leadMasterInfo.leadEnquiryTypes" [(value)]="s.id">{{ s.enquiryType }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+        
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2">
+                        <mat-select formControlName="leadSpaceTypeId" placeholder="Space Type">
+                        <mat-option>None</mat-option>
+                        <mat-option *ngFor="let s of leadMasterInfo.leadSpaceTypes" [(value)]="s.id">{{ s.spaceType }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!---->
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2">
+                        <input matInput formControlName="quantityInSquareFeet" type="number" placeholder="Quantity In Square Feet" autocomplete="off">
+                    </mat-form-field>
+                    
+
+                    <mat-form-field class="col-sm-4 col-md-4 col-lg-4 ">
+                        <!-- <mat-select formControlName="leadReminderOptionId" placeholder="Reminder" [disabled]="isReminderOn" (selectionChange)="reminderValueChange($event)">
+                        <mat-option>None</mat-option>
+                        <mat-option *ngFor="let s of leadMasterInfo.leadReminderOptions" [(value)]="s.id" [disabled]="isReadOnly">{{ s.reminder }}</mat-option>
+                        </mat-select> -->
+
+                        <mat-placeholder>Caller Lead Reminder</mat-placeholder>
+                        <mat-datetimepicker-toggle [for]="callerLeadReminder" matSuffix [disabled]="isCallerReminderOn || isReadOnly"></mat-datetimepicker-toggle>
+                        <mat-datetimepicker #callerLeadReminder type="datetime" openOnFocus="true" timeInterval="5"
+                         (selectedChanged)="callerReminderChange($event)"></mat-datetimepicker>
+                        <input matInput formControlName="callerLeadReminder" [matDatetimepicker]="callerLeadReminder" 
+                        autocomplete="off"  [disabled]="isCallerReminderOn || isReadOnly" (input)="callerReminderTextChange($event)">
+                        
+                    </mat-form-field>
+                    
+                    <mat-slide-toggle class="col-sm-2 col-md-2 col-lg-2 px-2" (change)="callerRemindertoggle($event)" [checked]="isCallerReminderOn" [disabled]="isReadOnly"></mat-slide-toggle>
+
+                    <mat-form-field class="col-sm-12 col-md-12 col-lg-12 px-2">
+                        <textarea matInput formControlName="callerRemarks" type="text" placeholder="Caller Remarks" [rows]="5" [readonly]="isReadOnly"></textarea>
+                        <mat-error  *ngIf="leadDetailForm.get('callerRemarks').hasError('required')">
+                            Please enter your remarks
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="list-group col-sm-12 col-md-12 col-lg-12 pl-2">
+                        <span class="small">Caller History:</span>
+                        <div class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let remark of leadDetail.leadCallerRemarks">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="fs-6 fw-bold mb-1">{{remark.callingStatus}}</h5>
+                            </div>
+                            <p class="mb-1">{{remark.callerRemark}}</p>
+                            <small class="fst-italic">{{remark.callerRemarkBy}} at {{remark.callerRemarkAt | date: 'dd-MMM-yyyy HH:mm:ss'}}</small>
+                        </div>
+                    </div>
+                </div>
+                <!-- </div> -->
+                </mat-tab>
+                <mat-tab label="EC Manager Action" class="row">
+                    <!-- <mat-form-field class="col-sm-12 col-md-12 col-lg-12 mt-2 px-2">
+                        <mat-select formControlName="assignToSalesPersonId" placeholder="Select Sales Person">
+                        <mat-option>None</mat-option>
+                        <mat-option *ngFor="let s of leadMasterInfo.leadEnquiryTypes" [(value)]="s.id">{{ s.enquiryType }}</mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <div class="list-group-scroll-list">
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2 mt-1">
+                        <input matInput formControlName="assignedAtToEC" type="text" placeholder="Lead Assigned At" readonly="true">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-sm-4 col-md-4 col-lg-4 px-2 mt-1">
+                        <mat-placeholder>EC Lead Reminder</mat-placeholder>
+                        <mat-datetimepicker-toggle [for]="ecLeadReminder" matSuffix [disabled]="isECReminderOn || !isReadOnly"></mat-datetimepicker-toggle>
+                        <mat-datetimepicker #ecLeadReminder type="datetime" openOnFocus="true" timeInterval="5" 
+                         (selectedChanged)="ecReminderChange($event)"></mat-datetimepicker>
+
+                        <input matInput formControlName="ecLeadReminder" [matDatetimepicker]="ecLeadReminder" 
+                        autocomplete="off" [disabled]="isECReminderOn || !isReadOnly" (input)="ecReminderTextChange($event)">
+                    </mat-form-field>
+                    <mat-slide-toggle class="col-sm-2 col-md-2 col-lg-2 px-2" (change)="ecRemindertoggle($event)" [checked]="isECReminderOn" [disabled]="!isReadOnly"></mat-slide-toggle>
+
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2 mt-1">
+                        <mat-select formControlName="leadStatusId" placeholder="Lead Status" (selectionChange)="onLeadStatusChange($event)" [disabled]="isLeadConverted">
+                        <mat-option>None</mat-option>
+                        <mat-option *ngFor="let s of leadMasterInfo.leadStatuses" [(value)]="s.id">{{ s.status }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>                    
+                    
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2 mt-1" *ngIf="isToShowConvertedLeadsValue">
+                        <input matInput [matDatepicker]="leadConversion" name="leadConversion" 
+                        placeholder="Lead Conversion Date" formControlName="leadConversion" autocomplete="off" [disabled]="isLeadConverted"/>
+                        <mat-datepicker-toggle matSuffix [for]="leadConversion" [disabled]="isLeadConverted"></mat-datepicker-toggle>
+                        <mat-datepicker #leadConversion></mat-datepicker>
+                        <mat-error  *ngIf="leadDetailForm.get('leadConversion').hasError('required')">
+                            Please select conversion date
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2" *ngIf="isToShowConvertedLeadsValue">
+                        <input matInput formControlName="dealerCode" type="text" placeholder="Dealer Code" autocomplete="off">
+                    </mat-form-field>
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2" *ngIf="isToShowConvertedLeadsValue">
+                        <input matInput formControlName="dealerName" type="text" placeholder="Dealer Name" autocomplete="off" [readonly]="isLeadConverted">
+                        <mat-error  *ngIf="leadDetailForm.get('dealerName').hasError('required')">
+                            Please enter dealer name
+                        </mat-error>
+                    </mat-form-field>
+                    
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2" *ngIf="isToShowConvertedLeadsValue">
+                        <input matInput formControlName="leadValueINR" type="number" placeholder="Lead Value INR" autocomplete="off" [readonly]="isLeadConverted">
+                        <mat-error  *ngIf="leadDetailForm.get('leadValueINR').hasError('required')">
+                            Please enter value in INR
+                        </mat-error>
+                    </mat-form-field>                  
+
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2" *ngIf="isToShowConvertedLeadsValue">
+                        <input matInput formControlName="volumeInSquareFeet" type="number" autocomplete="off" placeholder="Volume In Square Feet" >
+                    </mat-form-field>
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2" *ngIf="isToShowConvertedLeadsValue">
+                        <input matInput formControlName="futureRequirement" type="text" autocomplete="off" placeholder="Future Requirement" >
+                    </mat-form-field>
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2" *ngIf="isToShowConvertedLeadsValue">
+                        <input matInput formControlName="futureRequirementTileSegment" type="text" autocomplete="off" placeholder="Future Requirement Tile Segment" >
+                    </mat-form-field>
+                    <mat-form-field class="col-sm-6 col-md-6 col-lg-6 px-2" *ngIf="isToShowConvertedLeadsValue">
+                        <input matInput formControlName="futureRequirementVolume" type="text" autocomplete="off" placeholder="Future Requirement Volume" >
+                    </mat-form-field>
+                    
+                    <div class="col-sm-12 col-md-12 col-lg-12 px-2" *ngIf="isToShowConvertedLeadsValue && !isToShowLeadInvoiceFiles">
+                        <input type="file" class="file-input" accept=".pdf" (change)="onFileUpload($event)" #invoiceFile>
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <button mat-fab color="primary" class="upload-btn" (click)="invoiceFile.click()" type="button">
+                                <mat-icon>attach_file</mat-icon>
+                            </button>
+                            <span class="mx-3">
+                                {{fileName || "No file uploaded yet."}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12 px-2" *ngIf="isToShowConvertedLeadsValue && isToShowLeadInvoiceFiles">
+                        <div class="card">
+                        <ul class="list-group list-group-flush" *ngFor="let invoiceFile of leadDetail.leadInvoiceFileDetails">
+                            <li class="list-group-item link-cursor" (click)="onLeadFileClick(invoiceFile.id)">{{invoiceFile.fileName}}</li>
+                        </ul>
+                        </div>
+                    </div>
+
+                    <mat-form-field class="col-sm-12 col-md-12 col-lg-12 px-2">
+                        <textarea matInput formControlName="ecRemarks" type="text" placeholder="EC Manager Remarks" [rows]="5"></textarea>
+                        <mat-error  *ngIf="leadDetailForm.get('ecRemarks').hasError('required')">
+                            Please enter your remarks
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="list-group col-sm-12 col-md-12 col-lg-12 pl-2">
+                        <span class="small">Caller History:</span>
+                        <div class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let remark of leadDetail.leadECManagerRemarks">
+                            <div class="d-flex w-100 justify-content-between">
+                                <p class="fs-6 fw-bold mb-1">{{remark.leadStatus}}</p>
+                            </div>
+                            <p class="mb-1">{{remark.ecManagerRemark}}</p>
+                            <small class="fst-italic">{{remark.ecManagerRemarkBy}} at {{remark.ecManagerRemarkAt | date: 'dd-MMM-yyyy HH:mm:ss'}}</small>
+                        </div>
+                    </div>
+                </div>
+                </mat-tab>
+
+            </mat-tab-group>          
+        </div>
+        
+    </mat-card>
+    <!-- <div class="row"> -->
+        <div class="col-sm-12 col-md-12 col-lg-12 mt-2">
+                <div class="float-end">
+                    <!-- <button mat-raised-button type="button" class="mx-3" color="primary" *ngIf="existingLeads" (click)="onLeadDetailClick()">Show Existing Leads</button> -->
+                    <button mat-raised-button type="submit" color="primary" [disabled]="leadDetailForm.pristine">Save Lead Info</button>
+                </div>
+        </div>
+    <!-- </div> -->
+</form>
+</mat-tab>
+<mat-tab label="Lead Activity">
+    <app-lead-activity></app-lead-activity>
+</mat-tab>
+<mat-tab class="existingLeadTabFont" label="Existing Leads" *ngIf="existingLeads">
+    <app-existing-lead></app-existing-lead>
+</mat-tab>
+</mat-tab-group>
+
+<!-- <h1>{{ leadMasterInfo.states | json }}</h1> -->

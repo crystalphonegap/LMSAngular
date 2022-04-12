@@ -1,0 +1,23 @@
+<div class="row container-fluid margin-top-10">
+
+  <div class="col-sm-3 col-md-3 col-lg-3" *ngIf="userRole == 'KPOAgent' || userRole == 'ECManager'"><app-upcoming-lead-list></app-upcoming-lead-list></div>
+  
+  <div class="col-sm-9 col-md-9 col-lg-9" >
+    <mat-tab-group >
+      <!-- <div class="col-sm-6 col-md-6 col-lg-6" *ngIf="userRole != 'KPOAgent'"></div> -->
+      <mat-tab label="Lead Attended">
+        <app-lead-attended  class="mx-3"></app-lead-attended>
+      </mat-tab>
+      <mat-tab label="Lead Conversion" *ngIf="userRole === 'Admin' || userRole === 'ECManager'">
+        <app-lead-conversion></app-lead-conversion>
+      </mat-tab>
+        <mat-tab label="EC Manager Leads" *ngIf="userRole === 'Admin' || userRole === 'ECManager'">
+            <app-lead-ec-report></app-lead-ec-report>
+        </mat-tab>
+        <mat-tab label="KPO Agent Leads" *ngIf="userRole === 'Admin' || userRole === 'KPOAgent'">
+            <app-lead-kpo-report></app-lead-kpo-report>
+        </mat-tab>
+        
+    </mat-tab-group>
+  </div>
+</div>

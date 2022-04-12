@@ -1,0 +1,95 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
+@import "../node_modules/material-design-icons/iconfont/material-icons.css";
+@import "../node_modules/ngx-toastr/toastr.css";
+
+/* @import '../node_modules/@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss'; */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+button:focus {
+    outline: none;
+    border: 0;
+  }
+
+
+  @media only screen and (max-width: 767px) {
+    .mat-toolbar.mat-primary{
+      font-size: 15px;
+    }
+  }
+
+  .margin-top-10 {
+    margin-top: 10px;
+  }
+
+  .margin-top-55px {
+    margin-top:100px;
+  }
+
+  .margin-top-65px {
+    margin-top:65px;
+  }
+
+  .margin-left-box  {
+    padding-top: 60%;
+    margin-right: 30px;
+    height: calc(100vh);
+    color: rgba(255,255,255,0.75);
+  }
+  
+  .margin-right-box {
+    margin-top: 80px;
+  }
+  
+  .toolbar-spacer {
+    flex: 1 1 auto;
+  }
+
+  .form-header {
+    display: flex;
+    box-sizing: border-box;
+    padding: 0 16px;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.bring-to-front {
+  z-index: 2 !important;
+}
+
+.full-width-table {
+  width: 100%;
+}
+
+.text-right {
+  text-align: right;
+  padding-right: 6em;
+}
+
+.last-child {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+app-lrdetail-print {
+  /* hide the printing component from @media screen */
+  display: none;
+}
+
+@media print {
+  /* invert the display (show/hide) properties of the main */
+  /* aplication component and the printing component       */
+
+  app-lrdetail-print {
+    display: block;
+  }
+
+  .main-container {
+    display: none;
+  }
+}

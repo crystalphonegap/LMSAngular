@@ -1,0 +1,19 @@
+<h2>Upcoming Leads...</h2>
+<div class="list-group list-group-scroll">
+    <a routerLink="/lms/leads" [queryParams]="{ isUpcomingLeads: 'true'}"
+    [ngClass]="{'reminderExpired': lead.isReminderExpired == true }"
+     class="list-group-item list-group-item-action" *ngFor="let lead of leadList">
+      <div class="d-flex w-100 justify-content-between">
+        <div class="mb-1">{{lead.contactPersonName}}</div>
+        <div><small>{{lead.remindAt | date: 'dd-MMM HH:mm' }}</small></div>
+      </div>
+      <div class="d-flex w-100 justify-content-between">
+          <div class="mb-1">{{ lead.leadContactDetail.mobileNumber }}</div>
+          <small>{{ lead.leadSource }}</small>
+        </div>
+        <div class="d-flex w-100 justify-content-between">
+            <div class="mb-1">{{ lead.leadContactDetail.emailAddress }}</div>
+        <small>{{ lead.leadDateTime | date: 'dd-MMM HH:mm' }}</small>
+    </div>
+    </a>
+  </div>

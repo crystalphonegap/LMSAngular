@@ -1,0 +1,31 @@
+.list-group-scroll {
+    max-height: 450px;
+    margin-bottom: 10px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.list-group-scroll::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    /* border-radius: 30px; */
+    background: rgba(0,0,0,.26);
+  }
+  
+  .list-group-scroll::-webkit-scrollbar-thumb {
+    /* border-radius: 30px; */
+    background: rgba(0,0,0,.26); /* // Put your color */
+  }
+  
+  .list-group-scroll::-webkit-scrollbar-button,
+  .list-group-scroll::-webkit-scrollbar-track,
+  .list-group-scroll::-webkit-scrollbar-track-piece,
+  .list-group-scroll::-webkit-scrollbar-corner,
+  .list-group-scroll::-webkit-resizer {
+    display: none;
+  }
+
+  .reminderExpired {
+    background-color: #f44336;
+    color: #ffffff;
+  }

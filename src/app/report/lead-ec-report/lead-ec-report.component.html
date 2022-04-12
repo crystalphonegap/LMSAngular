@@ -1,0 +1,66 @@
+<mat-card>
+  <!-- <mat-card-header>
+      <mat-card-title>Download Leads</mat-card-title>
+  </mat-card-header> -->
+  <mat-card-content>
+    <form [formGroup]="ecLeadDownloadFilterForm">
+      <div class="row">
+        <mat-form-field class="col-sm-4 col-md-4 col-lg-4" appearance="">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [formGroup]="ecLeadDownloadFilterForm" [rangePicker]="picker">
+            <input matStartDate formControlName="leadFromDate" placeholder="From date">
+            <input matEndDate formControlName="leadUptoDate" placeholder="Upto date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+          <!-- <mat-error *ngIf="orderQueryForm.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+              <mat-error *ngIf="orderQueryForm.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
+        </mat-form-field>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <button mat-mini-fab color="primary" class="mx-3" (click)="showReport()">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <button mat-mini-fab type="button" color="primary" (click)="downloadReport()">
+            <mat-icon>file_download</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+    <div class=""></div>
+    
+    <table class="table table-striped table-hover">
+      <thead [ngClass]="{'table-head-body-block': userRole == 'Admin'}">
+        <tr>
+          <th scope="col" width="12%">Experience Center</th>
+          <th scope="col" class="text-right" width="8%">Lead Assigned</th>
+          <th scope="col" class="text-right" width="8%">Calls Done</th>
+          <th scope="col" class="text-right" width="8%">Calls Pending</th>
+          <th scope="col" class="text-right" width="8%">Closed with Other Brands</th>
+          <th scope="col" class="text-right" width="8%">No Requirement</th>
+          <th scope="col" class="text-right" width="8%">Follow Up</th>
+          <th scope="col" class="text-right" width="8%">Converted Leads</th>
+          <th scope="col" class="text-right" width="8%">Not Reachable</th>
+          <th scope="col" class="text-right" width="8%">Hot</th>
+          <th scope="col" class="text-right" width="8%">Warm</th>
+          <th scope="col" class="text-right" width="8%">Cold</th>
+        </tr>
+      </thead>
+      <tbody class="list-group-scroll" [ngClass]="{'table-head-body-block': userRole == 'Admin'}">
+        <tr *ngFor="let ecmanagerLead of ecManagerLeadData; let last = last" [ngClass]="{'last-child': last}">
+          <td width="12%">{{ecmanagerLead.experienceCenterName}}</td>
+          <td class="text-right" width="8%">{{ecmanagerLead.leadAssigned}}</td>
+          <td class="text-right" width="8%">{{ecmanagerLead.attendedCalls}}</td>
+          <td class="text-right" width="8%">{{ecmanagerLead.pendingCalls}}</td>
+          <td class="text-right" width="8%">{{ecmanagerLead.closedWithOtherBrands}}</td>
+          <td class="text-right" width="8%">{{ecmanagerLead.noRequirements}}</td>
+          <td class="text-right" width="8%">{{ecmanagerLead.followUps}}</td>
+          <td class="text-right" width="8%">{{ecmanagerLead.convertedLeads}}</td>
+          <td class="text-right" width="8%">{{ecmanagerLead.notReachables}}</td>
+          <td class="text-right" width="8%">{{ecmanagerLead.hot}}</td>
+          <td class="text-right" width="8%">{{ecmanagerLead.warm}}</td>
+          <td class="text-right" width="8%">{{ecmanagerLead.cold}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-card-content>
+</mat-card>

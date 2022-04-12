@@ -1,0 +1,132 @@
+
+<!-- <ol *ngFor="let lead of leadList">
+    <li>
+        {{ lead.contactPersonName }}
+    </li>
+</ol>
+ -->
+ <div class="clearfix"></div>
+ <mat-accordion class="mt-2 mb-2">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Search / Filter
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <form [formGroup]="leadFilterForm">
+        <div class="row">
+            <mat-form-field  class="col-sm-12 col-md-12 col-lg-12" appearance="">
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [formGroup]="leadFilterForm" [rangePicker]="picker" >
+                    <input matStartDate formControlName="leadFromDate" placeholder="From date">
+                    <input matEndDate formControlName="leadUptoDate" placeholder="Upto date">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+                
+                <!-- <mat-error *ngIf="orderQueryForm.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                <mat-error *ngIf="orderQueryForm.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field class="col-sm-6 col-md-6 col-lg-6">
+                <input matInput formControlName="contactPersonName" type="text" autocomplete="off" placeholder="Enter Lead Name" >
+            </mat-form-field>
+
+            <mat-form-field class="col-sm-6 col-md-6 col-lg-6">
+                <input matInput formControlName="leadContactNo" type="text" autocomplete="off" placeholder="Enter Mobile No." >
+            </mat-form-field>
+
+            <mat-form-field class="col-sm-6 col-md-6 col-lg-6" *ngIf="userRole != 'ECManager'">
+                <mat-select formControlName="leadCallingStatusId" placeholder="Select Calling Status">
+                    <mat-option value="-1">None</mat-option>
+                    <mat-option value="0">All</mat-option>
+                    <mat-option *ngFor="let s of leadMasterInfo.leadCallingStatuses" [(value)]="s.id">{{ s.callingStatus }}</mat-option>
+                    <!-- <mat-option *ngFor="let transporter of transporters" [(value)]="transporter.id">{{ transporter.vendorName }}</mat-option> -->
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="col-sm-6 col-md-6 col-lg-6">
+                <mat-select formControlName="leadECStatusId" placeholder="Select Lead Status">
+                    <mat-option value="-1">None</mat-option>
+                    <mat-option value="0">All</mat-option>
+                    <mat-option *ngFor="let s of leadMasterInfo.leadStatuses" [(value)]="s.id">{{ s.status }}</mat-option>
+                    <!-- <mat-option *ngFor="let transporter of transporters" [(value)]="transporter.id">{{ transporter.vendorName }}</mat-option> -->
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="col-sm-6 col-md-6 col-lg-6">
+                <mat-select formControlName="leadStatusId" placeholder="Select Status">
+                    <mat-option value="0">All</mat-option>
+                    <mat-option *ngFor="let status of leadStatuses" [(value)]="status.id">{{ status.value }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-sm-6 col-md-6 col-lg-6">
+                <mat-select formControlName="leadSource" placeholder="Select Source">
+                    <mat-option value="0">All</mat-option>
+                    <mat-option *ngFor="let s of leadMasterInfo.leadSources" [(value)]="s.source">{{ s.source }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-sm-6 col-md-6 col-lg-6">
+                <mat-select formControlName="leadAttendedId" placeholder="Select Attend/Unattend">
+                    <mat-option value="0">All</mat-option>
+                    <mat-option *ngFor="let attend of leadAttended" [(value)]="attend.id">{{ attend.value }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field class="col-sm-6 col-md-6 col-lg-6">
+                <mat-select formControlName="leadClassificationId" placeholder="Select Classification">
+                    <mat-option value="0">All</mat-option>
+                    <mat-option *ngFor="let s of leadMasterInfo.leadClassifications" [(value)]="s.id">{{ s.classification }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-sm-12 col-md-12 col-lg-12" *ngIf="userRole != 'ECManager'">
+                <mat-select formControlName="stateName" placeholder="Select State">
+                    <mat-option value="0">All</mat-option>
+                    <mat-option value="Others">Others</mat-option>
+                    <mat-option *ngFor="let state of leadMasterInfo.statesFilter" [(value)]="state.stateName">{{ state.stateName }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-sm-12 col-md-12 col-lg-12" *ngIf="userRole != 'ECManager'">
+                <mat-select formControlName="experienceCenterId" placeholder="Select Experience Center">
+                    <mat-option value="0">All</mat-option>
+                    <mat-option *ngFor="let s of leadMasterInfo.experienceCenters" [(value)]="s.experienceCenterId">{{ s.experienceCenterName }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-slide-toggle class="col-sm-12 col-md-12 col-lg-12" (change)="toggle($event)" [checked]="isUpcomingLeads">Upcoming Leads</mat-slide-toggle>
+            <div class="col-sm-6 col-md-6 col-lg-6 mt-2">
+                <button mat-raised-button type="button" (click)="resetFilter()">Reset</button>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 mt-2">
+                <button mat-raised-button type="button" color="primary" (click)="applyFilter()">Apply Filter</button>
+            </div>
+        </div>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+<div class="row list-group-scroll">
+    
+    <div class="col-sm-12 col-md-12 col-lg-12 mt-2" *ngFor="let lead of leadList">
+        <mat-card  (click)="onLeadClick(lead.id)" (mouseenter)="mouseenter($event)" (mouseleave)="mouseleave($event)" 
+        [ngClass]="{'active': selectedLeadId == lead.id, 'leadKPOUpdated': (lead.isLeadUpdated >=1 && userRole == 'KPOAgent'),
+        'leadECUpdated': (lead.isLeadUpdated == 2 && userRole == 'ECManager')}" class="pointer-cursor">
+        <!-- <ngx-avatar [name]=lead.leadSource class="float-end"></ngx-avatar> -->
+        <!-- <span class="col-sm-2 col-md-2 col-lg-2" *ngIf="lead.leadHistoryCount > 0" matBadge="{{lead.leadHistoryCount}}"></span> -->
+        <div class="row">
+            <div class="col-sm-8 col-md-8 col-lg-8 lead-title">{{ lead.contactPersonName }}</div>
+            <div class="col-sm-4 col-md-4 col-lg-4"><span class="small px-1" matBadgeOverlap="false" [matBadge]="lead.leadHistoryCount > 0 ? lead.leadHistoryCount : null" >{{ lead.leadDateTime | date: 'dd-MMM HH:mm' }}</span></div>
+            <div class="col-sm-6 col-md-6 col-lg-6 lead-mobile">{{ lead.leadContactDetail.mobileNumber }}</div>
+            <span class="col-sm-6 col-md-6 col-lg-6 text-end">{{lead.leadSource}}</span>
+            <!-- <div class="col-sm-8 col-md-8 col-lg-8 lead-mobile mt-2">{{ lead.leadContactDetail.emailAddress }}</div> -->
+            <!-- <div class="col-sm-8 col-md-8 col-lg-8 lead-mobile mt-2">{{ lead.leadSource }}</div> -->
+        </div>
+    </mat-card>
+    
+    </div>
+
+    
+</div>
+<div class="mat-elevation-z1 footer bring-to-front">
+    <mat-paginator [length]="pageList.totalCount" [pageSize]="pageList.pageSize"
+       [pageIndex]="pageList.pageIndex" [pageSizeOptions]="pageList.pageSizeOptions" (page)="onChangedPage($event)"
+      [showFirstLastButtons]="true" *ngIf="pageList.totalCount >= 0"></mat-paginator>
+</div>

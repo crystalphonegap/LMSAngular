@@ -1,0 +1,65 @@
+<div class="row container-fluid margin-top-10">
+    <h2>Upload Leads</h2>
+
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <input type="file" class="file-input" accept=".xls, .xlsx" (input)="onFileUpload($event)" #fileUpload>
+            <!-- <input type="file" class="file-input" accept=".xls, .xlsx" (input)="onFileUpload($event)" (change)="onFileSelected($event)" #fileUpload> -->
+
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <button mat-raised-button color="primary" class="upload-btn" (click)="fileUpload.click()">
+                    <mat-icon>attach_file</mat-icon>Choose File
+                </button>
+                <span class="mx-3">
+                    {{fileName || "No file uploaded yet."}}
+                </span>
+                
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 mt-3">
+                <button mat-raised-button color="primary" class="upload-btn" (click)="onFileSelected(fileUpload)">
+                    <mat-icon>file_upload</mat-icon>Upload File
+                </button>
+
+                <button mat-raised-button color="primary" class="mx-3" (click)="cancelUpload()">
+                    <mat-icon>autorenew</mat-icon>Reset
+                </button>
+             </div>
+        
+            <div class="progress mt-3">
+
+                <mat-progress-bar class="progress-bar" mode="determinate"
+                                  [value]="uploadProgress" *ngIf="uploadProgress > 0">
+              
+                </mat-progress-bar>
+              
+                <mat-icon class="cancel-upload" (click)="cancelUpload()"  *ngIf="uploadProgress > 0 && uploadProgress < 100" >delete_forever</mat-icon>
+              
+            </div>
+
+            <!-- <button mat-mini-fab color="primary" class="cancel-upload" (click)="cancelUpload()"  *ngIf="uploadProgress > 0 && uploadProgress < 100" >
+                <mat-icon>delete_forever</mat-icon>
+            </button> -->
+       
+
+        <div class="mt-2" *ngFor="let uploadLog of uploadExcelLogs">
+            <!-- getUploadExcelLogList -->
+            <mat-card (mouseenter)="mouseenter($event)" (mouseleave)="mouseleave($event)" >
+                <!-- <ngx-avatar [name]=lead.leadSource class="float-end"></ngx-avatar> -->
+                <div class="row">
+                    <div class="col-sm-4 col-md-4 col-lg-4 "><small>File Name: </small>{{ uploadLog.excelFileName }}</div>
+                    <div class="col-sm-4 col-md-4 col-lg-4 "><small>Uploaded by: </small>{{ uploadLog.uploadedByName }}</div>
+                    <div class="col-sm-4 col-md-4 col-lg-4 "><small>Uploaded At: </small>{{ uploadLog.uploadedAt | date: 'dd-MM-yyyy HH:mm' }}</div>
+                    <span class="col-sm-12 col-md-12 col-lg-12 mt-2"><small>Remarks: </small>{{uploadLog.uploadedRemarks}}</span>
+                </div>
+            </mat-card>
+        </div>
+        <div class="mat-elevation-z1 footer">
+            <mat-paginator [length]="pageList.totalCount" [pageSize]="pageList.pageSize"
+               [pageIndex]="pageList.pageIndex" (page)="onChangedPage($event)"
+              [showFirstLastButtons]="true" *ngIf="pageList.totalCount >= 0"></mat-paginator>
+        </div>
+        </div>
+    </div>
+
+
+</div>

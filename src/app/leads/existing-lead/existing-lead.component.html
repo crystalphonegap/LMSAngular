@@ -1,0 +1,36 @@
+<div class="clearfix"></div>
+<div class="list-group-scroll-list">
+  <div class="col-sm-12 col-md-12 col-lg-12 mt-2 " *ngFor="let lead of existingLeads">
+    <mat-card (mouseenter)="mouseenter($event)" (mouseleave)="mouseleave($event)">
+      <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 mt-1"><span class="small">Lead Name: </span><span class="text-weight">{{ lead.contactPersonName }}</span></div>
+            <div class="col-lg-6 col-md-6 col-sm-6 mt-1"><span class="small">Source / Date Time: </span><span class="text-weight">{{ lead.leadSource }} - {{ lead.leadDateTime | date: 'dd-MMM-yyyy HH:mm:ss' }}</span></div>
+            <!-- <div class="col-lg-4 col-md-4 col-sm-4 mt-1"><span class="small">Lead Source:</span> {{ lead.leadSource }}</div> -->
+            <div class="col-lg-6 col-md-6 col-sm-6 mt-2"><span class="small">City: </span><span class="text-weight">{{ lead.city }}</span></div>
+            <div class="col-lg-6 col-md-6 col-sm-6 mt-2"><span class="small">State: </span><span class="text-weight">{{ lead.state }}</span></div>
+            <div class="col-lg-12 col-md-12 col-sm-12 mt-2"><span class="small">Experience Center: </span><span class="text-weight">{{ lead.assignedToEC }}</span></div>
+            <div class="col-lg-6 col-md-6 col-sm-6 mt-2"><span class="small">Calling Status: </span><span class="text-weight">{{ lead.leadCallingStatus }}</span></div>
+            <div class="col-lg-6 col-md-6 col-sm-6 mt-2"><span class="small">Lead Status: </span><span class="text-weight">{{ lead.leadStatus }}</span></div>
+            <div class="col-lg-6 col-md-6 col-sm-6 mt-2"><span class="small">Classification: </span><span class="text-weight">{{ lead.leadClassification }}</span></div>
+            <div class="col-lg-12 col-md-12 col-sm-12 mt-2"><span class="small">Subject: </span><span class="text-weight">{{ lead.subject }}</span></div>
+            <div class="col-lg-12 col-md-12 col-sm-12 mt-2"><span class="small">Description: </span><span class="text-weight">{{ lead.description }}</span></div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <span class="small">Caller History:</span>
+          <div class="list-group list-group-scroll col-sm-12 col-md-12 col-lg-12 pl-2">
+              <div class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let remark of lead.leadCallerRemarks">
+                  <div class="d-flex w-100 justify-content-between">
+                      <!-- <h5 class="mb-1">{{remark.callerRemarkBy}}</h5> -->
+                      <p class="mb-1">{{remark.callerRemark}}</p>
+                  </div>
+                  <small class="fst-italic">{{remark.callerRemarkBy}} at {{remark.callerRemarkAt | date: 'dd-MMM-yyyy HH:mm:ss'}}</small>
+              </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

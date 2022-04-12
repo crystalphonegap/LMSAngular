@@ -1,0 +1,51 @@
+<h2>Lead Conversions</h2>
+<div class="list-group-item">
+  <form [formGroup]="leadConversionForm">
+    <div class="row">
+      <mat-form-field class="col-sm-4 col-md-4 col-lg-4" >
+        <mat-select formControlName="fiscalYearId" placeholder="Select Fiscal Year" (selectionChange)="showLeadConversion()">
+            <mat-option *ngFor="let s of fiscalYears" [(value)]="s.id">{{ s.fiscalYearDuration }}</mat-option>
+            <!-- <mat-option *ngFor="let transporter of transporters" [(value)]="transporter.id">{{ transporter.vendorName }}</mat-option> -->
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="col-sm-8 col-md-8 col-lg-8">
+          <mat-select formControlName="experienceCenterId" placeholder="Select Experience Center" (selectionChange)="showLeadConversion()">
+              <mat-option *ngFor="let s of experienceCenters" [(value)]="s.experienceCenterId">{{ s.experienceCenterName }}</mat-option>
+          </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+  
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Month</th>
+        <th scope="col" class="text-right">Lead Count</th>
+        <th scope="col" class="text-right">Lead Value (INR)</th>
+        <th scope="col" class="text-right">Average Lead Value (INR)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let leadConversion of leadConversionData; let last = last" [ngClass]="{'last-child': last}">
+        <td>{{leadConversion.month}}</td>
+        <td class="text-right">{{leadConversion.leadCount}}</td>
+        <td class="text-right">{{leadConversion.leadValueInINR.toLocaleString('en-IN', { maximumFractionDigits: 2 }) }}</td>
+        <!-- <td class="text-right">{{leadConversion.leadValueInINR.toLocaleString('en-IN', { maximumFractionDigits: 2, style: 'currency', currency: 'INR'}) }}</td> -->
+        <td class="text-right">{{leadConversion.averageLeadValue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- <table width="100%" class="full-width-table" matSort aria-label="Elements">
+    <tr class="mat-header-row">
+      <th class="mat-header-cell">Month</th>
+      <th class="mat-header-cell">Lead Count</th>
+      <th class="mat-header-cell">Lead Value (INR)</th>
+      <th class="mat-header-cell">Average Lead Value (INR)</th>
+    </tr>
+    <tr class="mat-row">
+      <td *ngFor="let item of ageingData.columnValues" class="mat-cell">{{ item  | number:'.2-2'}}</td>
+    </tr>
+  </table> -->
+</div>

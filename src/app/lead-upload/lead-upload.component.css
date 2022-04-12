@@ -1,0 +1,12 @@
+.file-input {
+    display: none;
+  }
+
+.progress {
+    display: flex;
+    height: 1.5rem;
+    overflow: hidden;
+    font-size: .75rem;
+    border-radius: 0rem !important;
+    background-color: transparent;
+}
