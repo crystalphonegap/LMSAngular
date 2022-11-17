@@ -33,6 +33,7 @@ export class LeadDetail {
     leadECManagerRemarks: ECManagerRemark[];
     ecRemarks: string;
     leadConversion: Date;
+
     dealerName: string;
     dealerCode: string;
     leadValueINR: number;

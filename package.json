@@ -1,6 +1,6 @@
 {
   "name": "hrj-lms-app",
-  "version": "0.0.0",
+  "version": "4.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

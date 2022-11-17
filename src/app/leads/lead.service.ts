@@ -81,7 +81,7 @@ export class LeadService {
   }
 
   saveLeadDetail(leadDetail: LeadDetailSave): Observable<Result> {
-    return this.http.put<Result>(environment.apiURL + '/Lead/saveLeadDetail/' + leadDetail.id, leadDetail)
+    return this.http.post<Result>(environment.apiURL + '/Lead/saveLeadDetail/' + leadDetail.id, leadDetail)
     .pipe(retry(0), catchError(this.handleError));
   }
 
